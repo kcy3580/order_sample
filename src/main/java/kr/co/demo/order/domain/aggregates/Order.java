@@ -25,7 +25,7 @@ public class Order extends AbstractAggregateRoot<Order> implements Serializable 
     protected Customer customer;
 
     //주문 상태코드 (OP: 주문 처리중, OS: 주문성공, OF: 주문실패, CP: 주문 취소 처리중, CS: 주문취소 성공, CF: 주문취소실패)
-    @Column(name = "ord_aprv_req_prcsg_st_code")
+    @Column(name = "ord_st_code")
     @Convert(converter = OrderStatusConverter.class)
     protected OrderStatus status;
 

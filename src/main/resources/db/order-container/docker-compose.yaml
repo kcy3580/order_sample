@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  order-local-db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    hostname: order-local-db
+    container_name: order-local-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: local
+    ports:
+      - "43306:3306"
+    volumes:
+      - ./src/main/resources/db/container:/docker-entrypoint-initdb.d
+    command:
+      - --default-time-zone=Asia/Seoul
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --character-set-client-handshake=0
+      - --slow-query-log=ON
+      - --long-query-time=2
