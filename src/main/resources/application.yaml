@@ -1,0 +1,179 @@
+spring:
+  profiles:
+    active: local # detault profile
+---
+#------------------------------[Profile Group]------------------------------#
+# Local? Spring Profile=local (e.i. --spring.profiles.active=local)
+spring:
+  profiles:
+    group:
+      "local": common-config, classpath-property
+---
+# Dev? Spring Profile=dev (e.i. --spring.profiles.active=dev)
+spring:
+  profiles:
+    group:
+      "dev": common-config, cloud-property, classpath-property
+---
+# Master? Spring Profile=dev (e.i. --spring.profiles.active=prod)
+spring:
+  profiles:
+    group:
+      "master": common-config, cloud-property, classpath-property
+---
+#------------------------------[Profile Config]------------------------------#
+# ??? ?? ?? ??
+spring:
+  application:
+    name: order
+  config:
+    activate:
+      on-profile: "common-config"
+  flyway:
+    enabled: false
+  jackson:
+    deserialization:
+      unwrap-single-value-arrays: true #List<Object>? wrapping ?? ?? ResponseEntity body type?? ??? ?? deserialize error ??
+
+logging:
+  config: classpath:log4j2.xml
+  level:
+    # ?? ??
+    io.awspring.cloud.paramstore: debug
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 500
+  shutdown: graceful
+#OpenFeign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 30000
+        retry-period: 500
+        retry-max-period: 1000
+        max-attempts: 3
+---
+# ??? (local or default) ??
+spring:
+  config:
+    activate:
+      on-profile: local, default
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:43306/order
+    username: order
+    password: local
+    hikari:
+      auto-commit: false
+      connection-timeout: 3000
+      max-lifetime: 180000
+      maximum-pool-size: 5
+      data-source-properties:
+        cachePrepStmts: true
+        rewriteBatchedStatements: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect:
+          storage_engine: innodb
+        format_sql: false
+        hbm2ddl.auto: none
+#  flyway:
+#    enabled: true
+#    validate-migration-naming: true
+#    locations: classpath:db/migration/common, classpath:db/migration/sample
+    # set clean-on-validation-error to true if you get flyway validation error during application startup
+    # this will clear the databases up and re-migrate from the scratch
+    clean-on-validation-error: true
+external:
+  endpoint:
+    payment:
+      host: http://localhost:8081/payment
+---
+# Dev? ??
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:43306/order
+    username: order
+    password: dev
+    hikari:
+      auto-commit: false
+      connection-timeout: 3000
+      max-lifetime: 180000
+      maximum-pool-size: 5
+      data-source-properties:
+        cachePrepStmts: true
+        rewriteBatchedStatements: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect:
+          storage_engine: innodb
+        format_sql: false
+        hbm2ddl.auto: none
+#  flyway:
+#    enabled: true
+#    validate-migration-naming: true
+#    locations: classpath:db/migration/common, classpath:db/migration/sample
+    # set clean-on-validation-error to true if you get flyway validation error during application startup
+    # this will clear the databases up and re-migrate from the scratch
+    clean-on-validation-error: true
+external:
+  endpoint:
+    payment:
+      host: http://localhost:8081/payment
+---
+# Master? ??
+spring:
+  config:
+    activate:
+      on-profile: master
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:43306/order
+    username: order
+    password: master
+    hikari:
+      auto-commit: false
+      connection-timeout: 3000
+      max-lifetime: 180000
+      maximum-pool-size: 5
+      data-source-properties:
+        cachePrepStmts: true
+        rewriteBatchedStatements: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect:
+          storage_engine: innodb
+        format_sql: false
+        hbm2ddl.auto: none
+#  flyway:
+#    enabled: true
+#    validate-migration-naming: true
+#    locations: classpath:db/migration/common, classpath:db/migration/sample
+    # set clean-on-validation-error to true if you get flyway validation error during application startup
+    # this will clear the databases up and re-migrate from the scratch
+    clean-on-validation-error: true
+external:
+  endpoint:
+    payment:
+      host: http://localhost:8081/payment
