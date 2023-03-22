@@ -3,26 +3,26 @@ spring:
     active: local # detault profile
 ---
 #------------------------------[Profile Group]------------------------------#
-# Local? Spring Profile=local (e.i. --spring.profiles.active=local)
+# Local용 Spring Profile=local (e.i. --spring.profiles.active=local)
 spring:
   profiles:
     group:
       "local": common-config, classpath-property
 ---
-# Dev? Spring Profile=dev (e.i. --spring.profiles.active=dev)
+# Dev용 Spring Profile=dev (e.i. --spring.profiles.active=dev)
 spring:
   profiles:
     group:
       "dev": common-config, cloud-property, classpath-property
 ---
-# Master? Spring Profile=dev (e.i. --spring.profiles.active=prod)
+# Master용 Spring Profile=dev (e.i. --spring.profiles.active=prod)
 spring:
   profiles:
     group:
       "master": common-config, cloud-property, classpath-property
 ---
 #------------------------------[Profile Config]------------------------------#
-# ??? ?? ?? ??
+# 공통설정
 spring:
   application:
     name: order
@@ -38,7 +38,7 @@ spring:
 logging:
   config: classpath:log4j2.xml
   level:
-    # ?? ??
+    # 로깅 설정
     io.awspring.cloud.paramstore: debug
 server:
   port: 8080
@@ -58,7 +58,7 @@ feign:
         retry-max-period: 1000
         max-attempts: 3
 ---
-# ??? (local or default) ??
+# 로컬용 (local or default)
 spring:
   config:
     activate:
@@ -86,10 +86,10 @@ spring:
           storage_engine: innodb
         format_sql: false
         hbm2ddl.auto: none
-#  flyway:
-#    enabled: true
-#    validate-migration-naming: true
-#    locations: classpath:db/migration/common, classpath:db/migration/sample
+  flyway:
+    enabled: true
+    validate-migration-naming: true
+    locations: classpath:db/migration
     # set clean-on-validation-error to true if you get flyway validation error during application startup
     # this will clear the databases up and re-migrate from the scratch
     clean-on-validation-error: true
