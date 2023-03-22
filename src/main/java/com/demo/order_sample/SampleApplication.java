@@ -1,4 +1,4 @@
-package com.demo.sample;
+package com.demo.order_sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
