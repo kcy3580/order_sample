@@ -40,7 +40,7 @@ public class OrderController extends BaseController{
         Order order = orderService.create(command);
         CreateOrderRspDto rspDto = createOrderMapper.toRspDto(order);
 
-        return new ResponseEntity<CreateOrderRspDto>(rspDto, getSuccessHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(rspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
     @PutMapping(ORDER_PROCESS_URL)
@@ -48,7 +48,7 @@ public class OrderController extends BaseController{
         Order order = orderService.process(orderNo);
         ProcessOrderRspDto rspDto = processOrderMapper.toRspDto(order);
 
-        return new ResponseEntity<ProcessOrderRspDto>(rspDto, getSuccessHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(rspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
     @PutMapping(ORDER_COMPLETE_URL)
@@ -56,7 +56,7 @@ public class OrderController extends BaseController{
         Order order = orderService.complete(orderNo);
         CompleteOrderRspDto rspDto = completeOrderMapper.toRspDto(order);
 
-        return new ResponseEntity<CompleteOrderRspDto>(rspDto, getSuccessHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(rspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
 }
